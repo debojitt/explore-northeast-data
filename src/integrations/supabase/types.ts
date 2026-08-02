@@ -14,7 +14,87 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      experiences: {
+        Row: {
+          age_group: string[]
+          cab_contacts: Json
+          challenges: string | null
+          created_at: string
+          difficulty: string | null
+          district: string | null
+          duration: string | null
+          experience_type: string[]
+          food_option: string | null
+          homestay_contacts: Json
+          hotel_contacts: Json
+          id: string
+          ideal_for: string[]
+          ideal_season: string[]
+          name: string
+          nearby_experiences: string | null
+          notes: string | null
+          operation_pointers: string | null
+          sales_pointers: string | null
+          state: string
+          stay_option: string | null
+          tags: string[]
+          transport_option: string | null
+          updated_at: string
+        }
+        Insert: {
+          age_group?: string[]
+          cab_contacts?: Json
+          challenges?: string | null
+          created_at?: string
+          difficulty?: string | null
+          district?: string | null
+          duration?: string | null
+          experience_type?: string[]
+          food_option?: string | null
+          homestay_contacts?: Json
+          hotel_contacts?: Json
+          id?: string
+          ideal_for?: string[]
+          ideal_season?: string[]
+          name: string
+          nearby_experiences?: string | null
+          notes?: string | null
+          operation_pointers?: string | null
+          sales_pointers?: string | null
+          state: string
+          stay_option?: string | null
+          tags?: string[]
+          transport_option?: string | null
+          updated_at?: string
+        }
+        Update: {
+          age_group?: string[]
+          cab_contacts?: Json
+          challenges?: string | null
+          created_at?: string
+          difficulty?: string | null
+          district?: string | null
+          duration?: string | null
+          experience_type?: string[]
+          food_option?: string | null
+          homestay_contacts?: Json
+          hotel_contacts?: Json
+          id?: string
+          ideal_for?: string[]
+          ideal_season?: string[]
+          name?: string
+          nearby_experiences?: string | null
+          notes?: string | null
+          operation_pointers?: string | null
+          sales_pointers?: string | null
+          state?: string
+          stay_option?: string | null
+          tags?: string[]
+          transport_option?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
