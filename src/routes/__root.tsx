@@ -79,20 +79,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Northeast India Experience Database" },
+      { title: "Northeast India Experience Database | Travel Data Inserter" },
       {
         name: "description",
         content:
-          "Structured travel experience database builder for Northeast India travel agencies.",
+          "Add, organise and export structured travel experience records for all eight Northeast India states — logistics, contacts, sales and operation pointers in one dashboard.",
       },
-      { property: "og:title", content: "Northeast India Experience Database" },
+      { property: "og:title", content: "Northeast India Experience Database | Travel Data Inserter" },
       {
         property: "og:description",
         content:
-          "Structured travel experience database builder for Northeast India travel agencies.",
+          "Add, organise and export structured travel experience records for all eight Northeast India states — logistics, contacts, sales and operation pointers in one dashboard.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Northeast India Experience Database | Travel Data Inserter" },
+      { name: "twitter:description", content: "Add, organise and export structured travel experience records for all eight Northeast India states — logistics, contacts, sales and operation pointers in one dashboard." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d6f038c7-2943-470d-937c-7510c807744d" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d6f038c7-2943-470d-937c-7510c807744d" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -105,7 +109,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
 

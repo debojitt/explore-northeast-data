@@ -61,11 +61,11 @@ export const Route = createFileRoute("/")({
         content:
           "Add, organise and export structured travel experience records for all eight Northeast India states — logistics, contacts, sales and operation pointers in one dashboard.",
       },
-      { property: "og:title", content: "Northeast India Experience Database" },
+      { property: "og:title", content: "Northeast India Experience Database | Travel Data Inserter" },
       {
         property: "og:description",
         content:
-          "A structured, fully exportable database of Northeast India travel experiences with stay, homestay and cab contacts.",
+          "Add, organise and export structured travel experience records for all eight Northeast India states — logistics, contacts, sales and operation pointers in one dashboard.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
