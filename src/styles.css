@@ -154,5 +154,30 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    background-image:
+      radial-gradient(circle at 12% -10%, oklch(0.42 0.09 158 / 0.08), transparent 45%),
+      radial-gradient(circle at 92% 0%, oklch(0.72 0.14 62 / 0.1), transparent 40%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
   }
 }
+
+@utility panel {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+}
+
+@utility branch-line {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
