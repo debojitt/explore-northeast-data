@@ -18,13 +18,14 @@ export type Database = {
         Row: {
           age_group: string[]
           cab_contacts: Json
-          challenges: string | null
+          challenges: string[]
+          challenges_note: string | null
           created_at: string
           difficulty: string | null
           district: string | null
           duration: string | null
           experience_type: string[]
-          food_option: string | null
+          food_option: string[]
           homestay_contacts: Json
           hotel_contacts: Json
           id: string
@@ -36,21 +37,22 @@ export type Database = {
           operation_pointers: string | null
           sales_pointers: string | null
           state: string
-          stay_option: string | null
+          stay_option: string[]
           tags: string[]
-          transport_option: string | null
+          transport_option: string[]
           updated_at: string
         }
         Insert: {
           age_group?: string[]
           cab_contacts?: Json
-          challenges?: string | null
+          challenges?: string[]
+          challenges_note?: string | null
           created_at?: string
           difficulty?: string | null
           district?: string | null
           duration?: string | null
           experience_type?: string[]
-          food_option?: string | null
+          food_option?: string[]
           homestay_contacts?: Json
           hotel_contacts?: Json
           id?: string
@@ -62,21 +64,22 @@ export type Database = {
           operation_pointers?: string | null
           sales_pointers?: string | null
           state: string
-          stay_option?: string | null
+          stay_option?: string[]
           tags?: string[]
-          transport_option?: string | null
+          transport_option?: string[]
           updated_at?: string
         }
         Update: {
           age_group?: string[]
           cab_contacts?: Json
-          challenges?: string | null
+          challenges?: string[]
+          challenges_note?: string | null
           created_at?: string
           difficulty?: string | null
           district?: string | null
           duration?: string | null
           experience_type?: string[]
-          food_option?: string | null
+          food_option?: string[]
           homestay_contacts?: Json
           hotel_contacts?: Json
           id?: string
@@ -88,9 +91,9 @@ export type Database = {
           operation_pointers?: string | null
           sales_pointers?: string | null
           state?: string
-          stay_option?: string | null
+          stay_option?: string[]
           tags?: string[]
-          transport_option?: string | null
+          transport_option?: string[]
           updated_at?: string
         }
         Relationships: []
