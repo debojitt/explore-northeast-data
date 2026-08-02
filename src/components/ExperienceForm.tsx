@@ -112,7 +112,7 @@ export function ExperienceForm({
   existing,
   onDone,
 }: {
-  existing?: Experience;
+  existing?: Experience | undefined;
   onDone: () => void;
 }) {
   const [form, setForm] = useState<ExperienceInput>(
