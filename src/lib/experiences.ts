@@ -61,7 +61,7 @@ export const emptyExperience = (): ExperienceInput => ({
   cab_contacts: [],
 });
 
-const table = () => supabase.from("experiences" as never);
+const table = () => supabase.from("experiences");
 
 export async function listExperiences(): Promise<Experience[]> {
   const { data, error } = await table().select("*").order("created_at", { ascending: false });
@@ -82,13 +82,13 @@ const serialize = (input: ExperienceInput) => ({
 });
 
 export async function createExperience(input: ExperienceInput) {
-  const { error } = await table().insert(serialize(input) as never);
+  const { error } = await table().insert(serialize(input));
   if (error) throw new Error(error.message);
 }
 
 export async function updateExperience(id: string, input: ExperienceInput) {
   const { error } = await table()
-    .update(serialize(input) as never)
+    .update(serialize(input))
     .eq("id", id);
   if (error) throw new Error(error.message);
 }
