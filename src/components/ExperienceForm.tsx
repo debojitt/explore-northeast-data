@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, Save } from "lucide-react";
-import { useState } from "react";
+import { Loader2, RotateCcw, Save } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { ContactListEditor } from "@/components/ContactListEditor";
@@ -108,6 +108,18 @@ function Field({
   );
 }
 
+const draftKey = (id?: string) => `ne-experience-draft:${id ?? "new"}`;
+
+function loadDraft(id?: string): ExperienceInput | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(draftKey(id));
+    return raw ? (JSON.parse(raw) as ExperienceInput) : null;
+  } catch {
+    return null;
+  }
+}
+
 export function ExperienceForm({
   existing,
   onDone,
@@ -115,13 +127,44 @@ export function ExperienceForm({
   existing?: Experience | undefined;
   onDone: () => void;
 }) {
-  const [form, setForm] = useState<ExperienceInput>(
-    existing ? toInput(existing) : emptyExperience(),
-  );
+  const base = existing ? toInput(existing) : emptyExperience();
+  const [form, setForm] = useState<ExperienceInput>(base);
+  const [restored, setRestored] = useState(false);
+  const hydrated = useRef(false);
   const queryClient = useQueryClient();
+
+  // Restore any unsaved draft after hydration (keeps SSR markup stable).
+  useEffect(() => {
+    const draft = loadDraft(existing?.id);
+    if (draft) {
+      setForm({ ...base, ...draft });
+      setRestored(true);
+    }
+    hydrated.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [existing?.id]);
+
+  // Autosave every change so minimising / closing never loses the form.
+  useEffect(() => {
+    if (!hydrated.current) return;
+    try {
+      window.localStorage.setItem(draftKey(existing?.id), JSON.stringify(form));
+    } catch {
+      /* storage full or blocked — ignore */
+    }
+  }, [form, existing?.id]);
+
+  const clearDraft = () => {
+    try {
+      window.localStorage.removeItem(draftKey(existing?.id));
+    } catch {
+      /* ignore */
+    }
+  };
 
   const set = <K extends keyof ExperienceInput>(key: K, value: ExperienceInput[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
+
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -131,12 +174,20 @@ export function ExperienceForm({
       return createExperience(form);
     },
     onSuccess: () => {
+      clearDraft();
       queryClient.invalidateQueries({ queryKey: ["experiences"] });
       toast.success(existing ? "Experience updated" : "Experience saved to the database");
       onDone();
     },
     onError: (error: Error) => toast.error(error.message),
   });
+
+  const discard = () => {
+    clearDraft();
+    setForm(existing ? toInput(existing) : emptyExperience());
+    setRestored(false);
+    toast.success("Draft discarded");
+  };
 
   return (
     <form
@@ -146,6 +197,11 @@ export function ExperienceForm({
         mutation.mutate();
       }}
     >
+      {restored && (
+        <div className="mb-6 rounded-md border border-primary/30 bg-primary/5 px-4 py-3 text-sm">
+          Unsaved draft restored — pick up right where you left off.
+        </div>
+      )}
       <Branch index={1} title="Identity" subtitle="What and where the experience is">
         <Field label="Name of the experience">
           <Input
@@ -364,9 +420,15 @@ export function ExperienceForm({
         </Field>
       </Branch>
 
-      <div className="sticky bottom-0 flex justify-end gap-2 border-t border-border bg-card/95 py-4 backdrop-blur">
+      <div className="sticky bottom-0 flex flex-wrap items-center justify-end gap-2 border-t border-border bg-card/95 py-4 backdrop-blur">
+        <p className="mr-auto text-xs text-muted-foreground">
+          Your entries are kept safe until you save or discard them.
+        </p>
+        <Button type="button" variant="ghost" onClick={discard}>
+          <RotateCcw className="size-4" /> Discard draft
+        </Button>
         <Button type="button" variant="ghost" onClick={onDone}>
-          Cancel
+          Close
         </Button>
         <Button type="submit" disabled={mutation.isPending}>
           {mutation.isPending ? (
