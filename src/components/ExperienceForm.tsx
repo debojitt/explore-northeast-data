@@ -415,9 +415,15 @@ export function ExperienceForm({
         </Field>
       </Branch>
 
-      <div className="sticky bottom-0 flex justify-end gap-2 border-t border-border bg-card/95 py-4 backdrop-blur">
+      <div className="sticky bottom-0 flex flex-wrap items-center justify-end gap-2 border-t border-border bg-card/95 py-4 backdrop-blur">
+        <p className="mr-auto text-xs text-muted-foreground">
+          Your entries are kept safe until you save or discard them.
+        </p>
+        <Button type="button" variant="ghost" onClick={discard}>
+          <RotateCcw className="size-4" /> Discard draft
+        </Button>
         <Button type="button" variant="ghost" onClick={onDone}>
-          Cancel
+          Close
         </Button>
         <Button type="submit" disabled={mutation.isPending}>
           {mutation.isPending ? (
