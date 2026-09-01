@@ -174,12 +174,20 @@ export function ExperienceForm({
       return createExperience(form);
     },
     onSuccess: () => {
+      clearDraft();
       queryClient.invalidateQueries({ queryKey: ["experiences"] });
       toast.success(existing ? "Experience updated" : "Experience saved to the database");
       onDone();
     },
     onError: (error: Error) => toast.error(error.message),
   });
+
+  const discard = () => {
+    clearDraft();
+    setForm(existing ? toInput(existing) : emptyExperience());
+    setRestored(false);
+    toast.success("Draft discarded");
+  };
 
   return (
     <form
