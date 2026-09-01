@@ -197,6 +197,11 @@ export function ExperienceForm({
         mutation.mutate();
       }}
     >
+      {restored && (
+        <div className="mb-6 rounded-md border border-primary/30 bg-primary/5 px-4 py-3 text-sm">
+          Unsaved draft restored — pick up right where you left off.
+        </div>
+      )}
       <Branch index={1} title="Identity" subtitle="What and where the experience is">
         <Field label="Name of the experience">
           <Input
