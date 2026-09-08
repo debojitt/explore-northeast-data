@@ -240,7 +240,10 @@ export function ItineraryPDF({ data }: { data: ItineraryData }) {
               <Text style={styles.dayNumber}>DAY {dayIndex + 1}</Text>
               <Text style={styles.dayTitle}>
                 {day.title.trim() ||
-                  (day.items[0] ? day.items[0].name : "Day at leisure")}
+                  (day.items[0]
+                    ? [day.items[0].district, day.items[0].state].filter(Boolean).join(", ") ||
+                      "Exploring"
+                    : "Day at leisure")}
               </Text>
             </View>
             <View style={styles.dayBody}>
