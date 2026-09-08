@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import {
+  CalendarDays,
   Compass,
   Download,
   FileJson,
@@ -153,15 +154,20 @@ function Dashboard() {
             selling points. Everything is saved to the cloud and exportable for your website.
           </p>
         </div>
-        <Button
-          size="lg"
-          onClick={() => {
-            setEditing(undefined);
-            setFormOpen(true);
-          }}
-        >
-          <Plus className="size-4" /> Add experience
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button size="lg" variant="outline" onClick={() => setBuilderOpen(true)}>
+            <CalendarDays className="size-4" /> Build itinerary
+          </Button>
+          <Button
+            size="lg"
+            onClick={() => {
+              setEditing(undefined);
+              setFormOpen(true);
+            }}
+          >
+            <Plus className="size-4" /> Add experience
+          </Button>
+        </div>
       </header>
 
       <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
