@@ -10,7 +10,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +26,8 @@ type Props = {
   onClose: () => void;
 };
 
+const DRAFT_KEY = "ne-itinerary-draft";
+
 export function ItineraryBuilder({ experiences, onClose }: Props) {
   const [title, setTitle] = useState("");
   const [clientName, setClientName] = useState("");
@@ -35,6 +37,52 @@ export function ItineraryBuilder({ experiences, onClose }: Props) {
   const [activeDay, setActiveDay] = useState(0);
   const [search, setSearch] = useState("");
   const [busy, setBusy] = useState(false);
+  const [restored, setRestored] = useState(false);
+  const loaded = useRef(false);
+
+  // Restore any saved draft after hydration.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (raw) {
+        const d = JSON.parse(raw) as ItineraryData;
+        if (d && Array.isArray(d.days)) {
+          setTitle(d.title ?? "");
+          setClientName(d.clientName ?? "");
+          setTravelDates(d.travelDates ?? "");
+          setCompanyName(d.companyName || "JorhatStays");
+          setDays(d.days.length ? d.days : [newDay(0)]);
+          setRestored(true);
+        }
+      }
+    } catch {
+      /* ignore malformed draft */
+    }
+    loaded.current = true;
+  }, []);
+
+  // Autosave the draft on every change.
+  useEffect(() => {
+    if (!loaded.current) return;
+    const data: ItineraryData = { title, clientName, travelDates, companyName, days };
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+    } catch {
+      /* storage full — ignore */
+    }
+  }, [title, clientName, travelDates, companyName, days]);
+
+  const clearDraft = () => {
+    localStorage.removeItem(DRAFT_KEY);
+    setTitle("");
+    setClientName("");
+    setTravelDates("");
+    setDays([newDay(0)]);
+    setActiveDay(0);
+    setRestored(false);
+    toast.success("Itinerary cleared");
+  };
+
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
