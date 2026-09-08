@@ -167,10 +167,14 @@ export function ItineraryBuilder({ experiences, onClose }: Props) {
             <h2 className="text-lg font-semibold leading-tight">Build custom itinerary</h2>
             <p className="text-xs text-muted-foreground">
               {days.length} {days.length === 1 ? "day" : "days"} · {totalItems} experiences
+              {restored ? " · draft restored" : " · saved automatically"}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={clearDraft}>
+            Start new
+          </Button>
           <Button onClick={download} disabled={busy}>
             {busy ? <Loader2 className="size-4 animate-spin" /> : <Download className="size-4" />}
             Download itinerary PDF
