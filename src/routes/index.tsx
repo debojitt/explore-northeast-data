@@ -390,6 +390,10 @@ function Dashboard() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {builderOpen && (
+        <ItineraryBuilder experiences={rows} onClose={() => setBuilderOpen(false)} />
+      )}
     </main>
   );
 }
