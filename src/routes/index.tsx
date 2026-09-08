@@ -17,6 +17,7 @@ import { toast } from "sonner";
 
 import { ExperienceDetail } from "@/components/ExperienceDetail";
 import { ExperienceForm } from "@/components/ExperienceForm";
+import { ItineraryBuilder } from "@/components/ItineraryBuilder";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -101,6 +102,7 @@ function Dashboard() {
   const [editing, setEditing] = useState<Experience | undefined>();
   const [pendingDelete, setPendingDelete] = useState<Experience | undefined>();
   const [openRow, setOpenRow] = useState<string | null>(null);
+  const [builderOpen, setBuilderOpen] = useState(false);
 
   const removal = useMutation({
     mutationFn: (id: string) => deleteExperience(id),
